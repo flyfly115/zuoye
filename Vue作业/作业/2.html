@@ -1,31 +1,38 @@
+    
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<script src="../js/vue.js" type="text/javascript"></script>
+		<script src="../js/vue.js"></script>
 	</head>
 	<body>
-		<!-- 作业：点击某个按钮，实现字符串变大写的功能 -->
 		<div id="app">
-			请输入字符串
-			<input type="text" id="input"/>
-			<button type="button" @click = "bigStr">字符串转大写</button>
-			<div>{{str2}}</div>
+			<span>{{str}}</span><br/>
+			<button @click="dianji">{{daxiaoxie}}</button>
 		</div>
-		<script type="text/javascript">
-			var vm = new Vue({
-				el:"#app",
-				data:{
-					str2:""
-				},
-				methods:{
-					bigStr:function(){
-						var str = document.getElementById('input');
-						this.str2=str.value.toUpperCase();
+	</body>
+	<script type="text/javascript">
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				str: 'hello',
+				daxiaoxie: '点击使字符串转大写',
+				type: true
+			},
+			methods:{
+				dianji:function(){
+					if(this.type){
+						this.str = this.str.toUpperCase();
+						this.daxiaoxie = '点击使字符串转小写';
+						this.type = false
+					}else{
+						this.str = this.str.toLowerCase();
+						this.daxiaoxie = '点击使字符串转大写';
+						this.type = true
 					}
 				}
-			})
-		</script>
-	</body>
+			}
+		})
+	</script>
 </html>

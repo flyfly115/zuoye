@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/vue.js"></script>
+		<style type="text/css">
+			.mytable{border-collapse: collapse; width: 600px; height: 200px;}
+			.mytable th{height: 40px; background: lightblue;}
+			.mytable td{text-align: center;}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<!-- <ul>
+				<li v-for="(item,key,index) in Tab">{{item.id}}--{{item.name}}--{{item.sex}}--{{item.jg}}--{{item.phone}}</li>
+			</ul> -->
+			<table border="1" class="mytable">
+				<thead>
+					<tr>
+						<th>学号</th>
+						<th>姓名</th>
+						<th>性别</th>
+						<th>籍贯</th>
+						<th>联系方式</th>
+						<th @click="ageSort" >年龄<span v-show="sortType && sortInit">↓</span><span v-show="!sortType && sortInit">↑</span></th></tr>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(item,index) in Tab">
+						<th>{{item.id}}</th><th>{{item.name}}</th>
+						<th>{{item.sex}}</th><th>{{item.jg}}</th>
+						<th>{{item.phone}}</th><th>{{item.age}}</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					Tab:[
+						{"id":1,"name":"lili","sex":"女","jg":"湖南","phone":"155-1234-9876","age":16},
+						{"id":2,"name":"jack","sex":"男","jg":"湖北","phone":"139-1454-9346","age":20},
+						{"id":3,"name":"zhuli","sex":"女","jg":"北京","phone":"187-1774-7876","age":18},
+						{"id":4,"name":"xiaoming","sex":"男","jg":"广东","phone":"155-1434-8476","age":19},
+						{"id":5,"name":"chen","sex":"男","jg":"上海","phone":"111-1234-6666","age":15}
+					],
+					sortType:true,
+					sortInit:false
+				},
+				methods:{
+					ageSort:function(){
+						this.sortInit = true;
+						if(this.sortType){
+							this.Tab.sort((a,b)=>{
+								return a.age - b.age;
+							})
+						}else{
+							this.Tab.sort((a,b)=>{
+								return b.age - a.age;
+							})
+						}
+						this.sortType = !this.sortType;
+						
+					}
+				}
+			})
+			/*
+						作业：学生信息表：使用 table
+						学号 ，姓名，性别，籍贯，联系方式
+						5条数据
+						*/
+		</script>
+	</body>
+</html>
