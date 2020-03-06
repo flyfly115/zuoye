@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/vue-router.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body,*{
+				padding: 0;
+				margin: 0;
+			}
+			#con{
+				position: fixed;
+				width: 100%;
+				height: 50px;
+				background: silver;
+				bottom: 0;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+			}
+			a{
+				color: #000000;
+				text-decoration:none;
+			}
+			.home-title{
+				width: 100%;
+				height: 50px;
+				background: red;
+				text-align: center;
+				line-height: 50px;
+				font-size: 18px;
+				color: white;
+			}
+			.reshang{
+				width: 100%;
+				height: 50px;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				border-bottom: 1px  solid black;
+			}
+			.reshang div{
+				width: 30%;
+				height: 30px;
+				background: salmon;
+				text-align: center;
+				line-height: 30px;
+				border-radius: 10px;
+				color: white;
+			}
+			.yingrentu{
+				height: 150px;
+				border-bottom: 1px solid black;
+				display: flex;
+				overflow-x: auto;
+			}
+			.yingrentu img{
+				width: 85px;
+				height: 115px;
+			}
+			.celebrity-item{
+				margin-left: 10px;
+			}
+			.news-item{
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+				width: 330px;
+				margin-left: 10px;
+				margin-bottom: 10px;
+			}
+			.news-item a{
+				font-size: 13px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+				<!-- 6.路由到的组件渲染的具体位置，路由的出口 -->
+			<router-view></router-view>
+			<div id="con">
+				<!-- 5.插入路由 -->
+				<router-link to="/dianying">电影</router-link>
+				<router-link to="/yingyuan">影院</router-link>
+				<router-link to="/wode">我的</router-link>
+			</div>
+			
+		</div>
+	</body>
+	<script type="text/template" id="dianyings">
+		<div>
+			<div class="home-title">猫眼电影</div>
+			<div class="reshang">
+				<div>
+					<router-link to="/dianying/zhengzaireying">正在热映</router-link>
+				</div>
+				<div>
+					<router-link to="/dianying/jijiangshangying">即将上映</router-link>
+				</div>
+			</div>
+			<div class="home-neirong">
+				<router-view></router-view>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="zhengzaireying">
+		<div>
+			<div style="margin: 10px;font-size: 15px;">热门影人</div>
+			<div class="yingrentu">
+				<div class="celebrity-item">
+				      <img class="celebrity-img" src="https://p0.meituan.net/moviemachine/9ccb37abf959c64231184506debf5def146192.jpg"  onerror="this.style.visibility='hidden'" />
+				      <h5 class="name line-ellipsis">甄子丹</h5>
+				  </div>
+				  <div class="celebrity-item">
+				      <img class="celebrity-img" src="https://p1.meituan.net/170.230/movie/e60b091ba479e5951331069e561977ab50378.jpg"  onerror="this.style.visibility='hidden'" />
+				      <h5 class="name line-ellipsis">马泰</h5>
+				  </div>
+				  <div class="celebrity-item">
+				      <img class="celebrity-img" src="https://p0.meituan.net/movie/1fb88ccc945980801701d50597bae66553347.jpg"  onerror="this.style.visibility='hidden'" />
+				      <h5 class="name line-ellipsis">曾志伟</h5>
+				  </div>
+				  <div class="celebrity-item">
+				      <img class="celebrity-img" src="https://p0.meituan.net/moviemachine/ae497712ff7d5004d0bebb6154b30d9457982.jpg"  onerror="this.style.visibility='hidden'" />
+				      <h5 class="name line-ellipsis">郑云</h5>
+				  </div>
+				  <div class="celebrity-item">
+				      <img class="celebrity-img" src="https://p1.meituan.net/movie/ed114d2bae1f67442c4162ca3d605924121233.jpg"  onerror="this.style.visibility='hidden'" />
+				      <h5 class="name line-ellipsis">徐佳</h5>
+				  </div>
+				  <div class="celebrity-item">
+				      <img class="celebrity-img" src="https://p1.meituan.net/moviemachine/97d6840d9605478e91912d5f05e9c55634719.jpg"  onerror="this.style.visibility='hidden'" />
+				      <h5 class="name line-ellipsis">孟鹤堂</h5>
+				  </div>
+				  <div class="celebrity-item">
+				      <img class="celebrity-img" src="https://p1.meituan.net/moviemachine/c7d7683eeb659efb9270fb38cda1704d118177.jpg"  onerror="this.style.visibility='hidden'" />
+				      <h5 class="name line-ellipsis">于谦</h5>
+				  </div>
+				  <div class="celebrity-item">
+				      <img class="celebrity-img" src="https://p0.meituan.net/moviemachine/b201f991c2cf98dfd6fafe97ad90eecd176389.png"  onerror="this.style.visibility='hidden'" />
+				      <h5 class="name line-ellipsis">郭德纲</h5>
+				  </div>
+				  <div class="celebrity-item">
+				      <img class="celebrity-img" src="https://p0.meituan.net/movie/0a93613649a148e0ff55f53d02668db0141734.jpg"  onerror="this.style.visibility='hidden'" />
+				      <h5 class="name line-ellipsis">胡夏</h5>
+				  </div>
+			</div>
+			<div class="redian">
+				<div style="margin: 10px;font-size: 15px;">娱乐热点</div>
+				<div class="wenzi">
+					<div class="news-item">
+					    <a href="/news/645408"><p>1.&nbsp;《安家》原型故事探讨人性，孙俪遇富商客户迎转机</p></a>
+					  </div>
+					  <div class="news-item">
+					    <a href="/news/619839"><p>2.&nbsp;深圳洛克特视效深度参与影片《孙悟空之噬天魔猴》的制作</p></a>
+					  </div>
+					  <div class="news-item">
+					    <a href="/news/624993"><p>3.&nbsp;《安家》收视持续领跑，房似锦意外遭停职</p></a>
+					  </div>
+					  <div class="news-item">
+					    <a href="/news/670177"><p>4.&nbsp;电影《终极代码》宣传曲首发！用声音打造一场《不凡》盛宴</p></a>
+					  </div>
+					  <div class="news-item">
+					    <a href="/news/645630"><p>5.&nbsp;索尼最新动画电影《智能大反攻》发布首支预告，主题聚焦人工智能</p></a>
+					  </div>
+					  <div class="news-item">
+					    <a href="/news/634131"><p>6.&nbsp;《大主宰》牧尘洛璃结局成最大惊喜，超前点映剧情甜虐交加引热议</p></a>
+					  </div>
+					  <div class="news-item">
+					    <a href="/news/624553"><p>7.&nbsp;陈冠希为女儿办画展，3岁Alaia天赋惊人！更大开派对庆祝生日</p></a>
+					  </div>
+					  <div class="news-item">
+					    <a href="/news/629332"><p>8.&nbsp;刘昊然陪妈妈现身超市，主动当“苦力”超孝顺，穿着低调仍显眼</p></a>
+					  </div>
+					  <div class="news-item">
+					    <a href="/news/624536"><p>9.&nbsp;黄磊分享女儿多多日常，童言无忌引爆笑，孙红雷意外躺枪</p></a>
+					  </div>
+					  <div class="news-item">
+					    <a href="/news/634135"><p>10.&nbsp;王思聪与男友人现身日本街头，不戴口罩很胆大，网友评论：驼背好严重</p></a>
+					  </div>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="jijiangshangying">
+		<div>
+			<div style="margin: 10px;font-size: 15px;">近期最受期待</div>
+			<div class="qidai">
+				<div class="celebrity-item" v-for="(item,index) in tulist">
+				    <img :src="item.img"  />
+				    <h5>{{item.nm}}</h5>
+					<h5>{{item.comingTitle | fun("日")}}</h5>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript">
+		/***********************1.创建三个组件，显示三个页面****************************************/
+		var dianying = {
+			template:'#dianyings'
+		};
+		var yingyuan = {
+			template:`<div>影院</div>`
+		};
+		var wode = {
+			template:`<div>我的</div>`
+		}
+		var zhengzaireying = {
+			template:'#zhengzaireying'
+		}
+		var jijiangshangying = {
+			data:function(){
+				return {
+					tulist:[]
+				}
+			},
+			template:'#jijiangshangying',
+			mounted:function(){
+				//获取内容页数据
+				axios.get('json/1.json').then((res)=>{
+					this.tulist = res.data.coming;
+					console.log(this.tulist)
+				})
+			},
+			filters:{
+				fun:function(value,arg){
+					var a = value.indexOf(arg)+1;
+					return value.substr(0,a)
+				}
+			}
+		}
+		/***************************2.创建路由配置表*********************************************/
+		var routes = [
+			//路径                           显示的组件
+			{"path":"/",redirect:'/dianying'},
+			{
+				'path':'/dianying',
+				'component':dianying,
+				children:[
+					{"path":"/",redirect:'zhengzaireying'},
+					{'path':'zhengzaireying',component:zhengzaireying},
+					{'path':'jijiangshangying',component:jijiangshangying},
+				],
+			},
+			{'path':'/yingyuan','component':yingyuan},
+			{'path':'/wode','component':wode}
+		];
+		/***************************3.配置路由表，创建新的路由表对象*********************************************/
+		var router = new VueRouter({
+			routes:routes
+		})
+		const vm = new Vue({
+			el:'#app',
+			data:{},
+			router:router
+		})
+	</script>
+</html>

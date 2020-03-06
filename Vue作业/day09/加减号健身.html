@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/hou1.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/swiper.min.css"/>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/vue-router.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			body{
+				padding: 0;
+				margin: 0;
+			}
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			a{
+				text-decoration:none;
+			}
+			.huanying{
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				margin-top: 50%;
+				font-size: 50px;
+				color: #007AFF;
+			}
+			.home{
+				/* position: absolute; */
+				width: 90%;
+				height: 517px;
+				border-radius: 13px;
+				margin: 5%;
+				background: steelblue;
+			}
+			.titles{
+				color: white;
+				font-size: 18px;
+				padding: 20px 0px 0px 20px;
+			}
+			.neirong{
+				width: 90%;
+				height: 440px;
+				border-radius: 5px;
+				background: white;
+				margin: 5%;
+			}
+			.neirongs a{
+				width: 100%;
+				height: 110px;
+				border-bottom: 1px solid silver;
+				background: white;
+				align-items: center;
+				display: flex;
+			}
+			.neirongs img{
+				width: 75px;
+				height: 75px;
+				margin: 17.5px;
+				border-radius: 10px;
+			}
+			.neirongs1 p{
+				font-size: 13px;
+				color: #7E7E7E;
+			}
+			.neirongs1 div{
+				color: #000000;
+			}
+			/*轮播图样式*/
+			/* .swiper-container {
+			    width: 100%;
+			    height: 200px;
+			}
+			.swiper-container img{height:200px;width: 100%;} */
+		</style>
+	</head>
+	<body>
+		<!-- https://img.jvhv.com/images/201908/5d5b48a022b11.png -->
+		<div id="app">
+			<router-link to="/neirongtitles"><span @click = "fun" v-if="type" class="huanying">欢迎来到加减号</span></router-link>
+			<router-view v-if="!type"></router-view>
+		</div>
+	</body>
+	<script type="text/template" id="con">
+		<div class="home">
+			<div class="titles">本周最受欢迎Top5</div>
+			<div class="neirong">
+					<div class="neirongs" v-for="(item,index) in neirong.CourseTop5">
+						<router-link :to="'/myneirong/'+item.pro_id">
+							<img :src="item.pro_img[0].url" >
+							<div class="neirongs1">
+								<div>{{item.pro_name}}</div>
+								<p>{{item.pro_Joiner}}人已参加</p>
+							</div>
+						</router-link>
+					</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="cons">
+		<div>
+		<router-link to="/neirongtitles">
+			<div class="fanhui">返回</div>
+		</router-link>
+			<div class="swiper-container">
+			  <div class="swiper-wrapper">
+			    <div class="swiper-slide" v-for="(item,index) in swiperArr">
+					<img :src="item.url" :alt="item.name"/>
+				</div>
+			  </div>
+				<div class="swiper-pagination"></div>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+			</div>
+			<div class="titless">
+				<div class="titles2">
+					<div class="titles2-0">{{kechengitem.pro_name}}</div>
+					<div class="titles2-1">
+						<div>按教练约定时间上课</div>
+						<div class="titles2-2">0好评</div>
+					</div>
+				</div>
+				<div class="titles3">
+					<div>有效期:不限</div>
+					<div>场地:学院自行选择预约</div>
+				</div>
+				<div class="titles4">
+					<span>{{kechengitem.pro_price}}.0</span>元
+				</div>
+			</div>
+			<div class="yuyue">
+				<div class="yuyue-1">
+					<div>可预约场馆</div>
+					<span>{{lengths}}</span>
+				</div>
+				<div class="yuyues">
+					<div v-if="lengths == 0" class="zanwu">暂无健身房</div>
+					<div class="yuyue-2" v-for="(item,index) in kechengitem.pro_gym_list">
+						<img :src="item.gym_headimg[0].url" >
+						<div class="titles2-2-1">
+							<div>{{item.gym_name}}</div>
+							<div class="titles2-2-1-2">{{item.gym_address}}</div>
+							<div class="titles2-2-1-3">
+								<div>{{item.gym_distance}}</div>
+								<div class="titles2-2-1-3-2">导航</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="dibu">
+				<div>联系客服</div>
+				<div>立即购买</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript">
+		var neirongtitles = {
+			data:function(){
+				return {
+					neirong:[]
+				}
+			},
+			template:'#con',
+			//挂载后引入数据
+			mounted:function(){
+				axios.post("https://www.jvhv.com/siteindex.php/Index/Index.html",{
+					desc: false,
+					orderBy: "top",
+					pageNow: 1,
+					pageSize: 20,
+					seller_user_id: "4bc4027c645343f09a964b5c2e9f875b"
+				}).then((res)=>{
+					// console.log(res);
+					this.neirong = res.data.data;
+					// console.log(this.$route)
+				})
+			}
+		}
+		//点击内容区的列表进入详细组件
+		var myneirong = {
+			data:function(){
+				return {
+					kechengitem:{},
+					swiperArr:[],
+					lengths:0
+				}
+			},
+			template:'#cons',
+			mounted:function(){
+				new Swiper('.swiper-container', {
+					spaceBetween: 30,
+					observer: true,
+					centeredSlides: true,
+					autoplay: {
+					  delay: 2500,
+					  disableOnInteraction: false,
+					},
+					pagination: {
+					  el: '.swiper-pagination',
+					  clickable: true,
+					},
+					navigation: {
+					  nextEl: '.swiper-button-next',
+					  prevEl: '.swiper-button-prev',
+					},
+				}),
+				console.log(this.$route.params.pro_id);
+				var pid= parseInt(this.$route.params.pro_id);
+				//7.获取数据，将数据保存到变量中
+				let params = new URLSearchParams();//创建新的查询传参对象
+				//接口定义了一些实用的方法来处理 URL 的查询字符串
+				params.append('pro_id',pid);
+				params.append('fid','');
+				axios.post("https://www.jvhv.com/siteindex.php/Lesson/Detail.html",params).then((res)=>{
+					console.log(res);
+					this.kechengitem = res.data.data;
+					console.log(this.kechengitem);
+					this.lengths = this.kechengitem.pro_gym_list.length;
+					this.swiperArr = res.data.data.pro_imglist;
+					console.log(this.swiperArr);
+				})
+			},
+		}
+		// var myneirong = {
+		// 	data:function(){
+		// 		return {
+		// 			item:{}
+		// 		}
+		// 	},
+		// 	template:'#cons',
+		// 	watch:{
+		// 		'$route'(to,from){}
+		// 	},
+		// 	mounted:function(){
+		// 		//获取内容页数据
+		// 		axios.get("https://www.jvhv.com/siteindex.php/Index/Index.html"+this.$route.params.idvalue
+		// 			).then((res)=>{
+		// 			console.log(this.$route);
+		// 			this.item = res.data;
+		// 			console.log(this.item)
+		// 		})
+		// 	}
+		// }
+		//配置路由表
+		var routes = [
+			{"path":"/neirongtitles","component":neirongtitles},
+			{'path':'/myneirong/:pro_id','component':myneirong}
+		]
+		//创建路由对象
+		var router = new VueRouter({
+			routes:routes
+		})
+		const vm = new Vue({
+			el:'#app',
+			data:{
+				type:true
+			},
+			router:router,
+			methods:{
+				fun:function(){
+					this.type = false
+				}
+			}
+		})
+	</script>
+</html>
